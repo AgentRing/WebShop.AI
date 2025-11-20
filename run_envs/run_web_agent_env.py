@@ -41,7 +41,7 @@ from web_agent_site.utils import DEBUG_PROD_SIZE
 
 def create_env(observation_mode='text', num_products=DEBUG_PROD_SIZE, use_site_env=False):
     """
-    Create and return a WebShop environment.
+    Create and return a WebShop environment using gymnasium.
     
     Args:
         observation_mode (str): Observation mode ('text' or 'html')
@@ -49,7 +49,7 @@ def create_env(observation_mode='text', num_products=DEBUG_PROD_SIZE, use_site_e
         use_site_env (bool): If True, use WebAgentSiteEnv; otherwise use WebAgentTextEnv
         
     Returns:
-        gym.Env: Configured environment
+        gym.Env: Configured environment (WebAgentSiteEnv or WebAgentTextEnv)
     """
     if use_site_env:
         try:
@@ -89,6 +89,7 @@ def create_env(observation_mode='text', num_products=DEBUG_PROD_SIZE, use_site_e
                 exit(1)
             raise
     else:
+        # Use gym.make with the registered environment
         env = gym.make(
             'WebAgentTextEnv-v0',
             observation_mode=observation_mode,
